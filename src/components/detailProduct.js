@@ -1,9 +1,9 @@
-import React,{useContext} from 'react';
+import React from 'react';
 //functions
 import {isInCart,quantityCounter } from './helper/founctions';
-//Products Context
-import { ContextProducts } from '../context/productsContextProvider';
-import { reducer_Context } from '../context/reducerContext';
+
+//redux
+import { useSelector,useDispatch } from 'react-redux';
 
 //icon
 import trash from "./trash.svg"
@@ -14,11 +14,11 @@ import { Link } from 'react-router-dom' ;
 
 
 const DetailProduct = (props) => {
-    const{State,dispatch}=useContext(reducer_Context)
-    const id=props.match.params.id
-    const Products=useContext(ContextProducts);
-
-    const Product =Products[id-1] ;
+    const Products=useSelector(state=>state.PruductsState.Pruducts)
+    const State =useSelector(state=>state.cartShoppingState);
+    const dispatch=useDispatch();
+    const id=(props.match.params.id)-1
+    const Product =Products[Number(id)] ;
     return (
         <div className={styles.conteiner}>
         <div className={styles.cart}>

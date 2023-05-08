@@ -1,6 +1,6 @@
-import React, { useContext } from 'react';
-//context
-import { reducer_Context } from '../context/reducerContext';
+import React from 'react';
+//redux
+import { useSelector,useDispatch } from 'react-redux';
 //icons
 import Cart from './shared/cart';
 
@@ -8,9 +8,10 @@ import Cart from './shared/cart';
 import styles from "./css/cartShopping.module.css"
 import { Link } from 'react-router-dom/cjs/react-router-dom.min';
 const CartShopping = () => {
-     const {State,dispatch}=useContext(reducer_Context)
+    const State =useSelector(state=>state.cartShoppingState);
+    const dispatch=useDispatch();
     return (<div className={styles.cartShopping}>
-        <div>
+        <div className={styles.carts}>
           {
           State.selectedItems.map(item=><Cart key={item.id} data={item}/>)
           }  
@@ -18,7 +19,7 @@ const CartShopping = () => {
         <div className={styles.checkOut}>
             {State.checkOut&&<div>
              <p>Thank You For Your Purchase ! </p>
-             <a href="/">+ Buy More</a>
+             <Link to="/">+ Buy More</Link>
             </div>}
         {Boolean(State.selectedItems.length)?<div>
             <h3>total: {State.total?State.total:"0"}$</h3>

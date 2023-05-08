@@ -1,9 +1,11 @@
-import React ,{useContext}from 'react';
+import React from 'react';
 //context reducerstate
-import { reducer_Context } from '../../context/reducerContext';
+// import { reducer_Context } from '../../context/reducerContext';
 //functions
 import { shortenTitle,isInCart,quantityCounter } from '../helper/founctions';
 
+//redux
+import { useSelector,useDispatch } from 'react-redux';
 //css
 import styles from "../css/product.module.css";
 //icon
@@ -11,7 +13,8 @@ import trash from "../trash.svg"
 //react-Router-dom
 import {Link} from "react-router-dom";
 const Product = ({dataProduct}) => {
-    const {State ,dispatch}=useContext(reducer_Context);
+    const State =useSelector(state=>state.cartShoppingState);
+    const dispatch=useDispatch();
     return (
         <div className={styles.cart}  >
            <img alt="product" src={dataProduct.image} />

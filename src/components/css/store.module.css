@@ -61,9 +61,20 @@
       content: 'Loading...';
     }
   }
+  .poster img{
+    width: 100%;
+    filter: brightness(0.4);
+    
+  }
   @media (max-width:550px) {
+    .store{
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-evenly;
+      background-color: black;
+  }
     .loading h2{
-      font-size: 13px;
+      font-size: 11px;
     }
   }
   

@@ -1,19 +1,20 @@
-import React, { useContext } from 'react';
-//context
-import { reducer_Context } from '../../context/reducerContext';
+import React from 'react';
+//redux
+import { useSelector,useDispatch} from 'react-redux';
 //functions
-import { shortenTitle,isInCart,quantityCounter } from '../helper/founctions';
+import {isInCart,quantityCounter } from '../helper/founctions';
 //icons
 import trash from "../trash.svg" 
 //css
 import styles from "../css/cart.module.css"
 const Cart = ({data}) => {
-    const {State,dispatch}=useContext(reducer_Context)
+    const State =useSelector(state=>state.cartShoppingState);
+    const dispatch=useDispatch();
     return (
         <div className={styles.cart}>
          <img className={styles.product} alt="product" src={data.image} /> 
-         <h3>{shortenTitle(data.title)}</h3>
-         <h3>Number : {data.quantity}</h3>
+        
+        <p>{data.quantity}</p>
          <div className={styles.buttons}>
          {
              isInCart(State,data.id)&&

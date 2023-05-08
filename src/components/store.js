@@ -1,30 +1,44 @@
-import React ,{useContext,useState}from 'react';
-
+import React ,{useEffect}from 'react';
+import { useSelector,useDispatch } from 'react-redux';
 //components
 import Product from './shared/product';
-//Products Context
-import { ContextProducts } from '../context/productsContextProvider';
+//ProductsActions
+import {fetchApi} from "../redux/PruductsData/ActionProductsData"
 
 //cssStayle
 import styles from "./css/store.module.css";
 
+//poster
+import poster from "./Poster.jpg"
 const Store = () => {
-    const [error,setErorr]=useState("");
-    const Products=useContext(ContextProducts);
-    setTimeout(() => {
-        setErorr("Your internet is not connected , Make sure you are connected to the Internet : (")
-        }, 5000);
+    const ProductsState=useSelector((state)=>state.PruductsState);
+    const dispatch=useDispatch()
+    useEffect(()=>{
+        if(!ProductsState.Pruducts.length){dispatch(fetchApi())}
+    },[ProductsState.Pruducts.length,dispatch])
     return (<>
-        {Products.length?<div className={styles.store}>
-            {Products.map(product=><Product key={product.id} dataProduct={product}/>)}
-        </div>:<div className={styles.loading}>
-{error.length?<h2>{error}</h2>:<div className={styles.loader}>
-  <div className={styles.loader_wheel}></div>
-  <div className={styles.loader_text}></div>
-  </div>}
-
-  </div> }
-        
+        {
+        ProductsState.Loading?
+        <div className={styles.loading}>
+        <div className={styles.loader}>
+        <div className={styles.loader_wheel}></div>
+        <div className={styles.loader_text}></div>
+        </div>
+        </div>
+        :
+        ProductsState.error?
+        <div className={styles.loading}>
+             <p>Network Error,Your internet is not connected , Make sure you are connected to the Internet</p>
+        </div>
+        :<>
+        <div className={styles.poster} >
+            <img alt='poster' src={poster}/>
+        </div>
+        <div className={styles.store}>
+            {ProductsState.Pruducts.map(product=><Product key={product.id} dataProduct={product}/>)}
+        </div>
+        </>
+        }
         </>
     );
 };

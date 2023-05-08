@@ -1,6 +1,3 @@
-import React,{createContext, useReducer} from 'react';
-
-const reducer_Context=createContext();
 const initialState={
     selectedItems:[],
     itemsCounter:0,
@@ -14,7 +11,7 @@ const sumItems = items => {
     let total = items.reduce((total, product) => total + product.price * product.quantity, 0).toFixed(2);
     return {itemsCounter, total}
 }
-const stateReducer=(state,action)=>{
+const ReducerCartShopping=(state=initialState,action)=>{
     switch(action.type){
     case "Add_Item":
     if(!state.selectedItems.find(item=>item.id===action.payload.id)){
@@ -70,15 +67,4 @@ const stateReducer=(state,action)=>{
     }
     
 }
-
-
-const ReducerContextProvider = ({children}) => {
-    const [State,dispatch]=useReducer(stateReducer,initialState)
-    return (
-           <reducer_Context.Provider value={{State,dispatch}}>
-            {children}
-           </reducer_Context.Provider>
-    );
-};
-
-export {ReducerContextProvider,reducer_Context} ;
+export default ReducerCartShopping
